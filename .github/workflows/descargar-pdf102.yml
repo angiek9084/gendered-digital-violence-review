@@ -14,16 +14,17 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - run: pip install pymupdf
-      - name: Recuperar CSV de la última ejecución OpenAlex
-        env:
-          GH_TOKEN: ${{ github.token }}
+      - name: Instalar extractor PDF
+        run: pip install pymupdf
+      - name: Regenerar listado OpenAlex desde los 355 registros del repositorio
         run: |
-          gh run download --repo "$GITHUB_REPOSITORY" --name enlaces-texto-completo --dir outputs/from-openalex
-          cp outputs/from-openalex/enlaces_texto_completo.csv data/enlaces_texto_completo.csv
+          python scripts/recuperar_textos.py
+          mkdir -p data
+          cp outputs/enlaces_texto_completo.csv data/enlaces_texto_completo.csv
       - name: Descargar PDF y extraer contenido
         run: python scripts/descargar_pdf102.py
-      - uses: actions/upload-artifact@v4
+      - name: Guardar textos y registro de resultados
+        uses: actions/upload-artifact@v4
         if: always()
         with:
           name: textos-pdf102-extraidos
