@@ -1,0 +1,22 @@
+name: Localizar textos completos (OpenAlex)
+on:
+  push:
+    paths:
+      - scripts/recuperar_textos.py
+      - data/cola_355_doi.csv
+  workflow_dispatch:
+jobs:
+  localizar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Localizar enlaces DOI y acceso abierto
+        run: python scripts/recuperar_textos.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: enlaces-texto-completo
+          path: outputs/enlaces_texto_completo.csv
