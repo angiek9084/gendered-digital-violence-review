@@ -1,0 +1,27 @@
+name: Enriquecer 160 publicaciones
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  metadata:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Consultar Crossref y OpenAlex
+        env:
+          OPENALEX_API_KEY: ${{ secrets.OPENALEX_API_KEY }}
+          CONTACT_EMAIL: ${{ secrets.CONTACT_EMAIL }}
+        run: python scripts/enrich_160.py
+      - name: Publicar resultados como artefacto privado
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: enriquecimiento-api-160
+          path: results/enriquecimiento_api_160.csv
+          if-no-files-found: warn
+          retention-days: 30
