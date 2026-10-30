@@ -1,0 +1,31 @@
+name: Descargar y extraer 102 PDF
+on:
+  push:
+    paths:
+      - scripts/descargar_pdf102.py
+      - .github/workflows/descargar-pdf102.yml
+  workflow_dispatch:
+jobs:
+  descargar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 55
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install pymupdf
+      - name: Recuperar CSV de la última ejecución OpenAlex
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh run download --repo "$GITHUB_REPOSITORY" --name enlaces-texto-completo --dir outputs/from-openalex
+          cp outputs/from-openalex/enlaces_texto_completo.csv data/enlaces_texto_completo.csv
+      - name: Descargar PDF y extraer contenido
+        run: python scripts/descargar_pdf102.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: textos-pdf102-extraidos
+          path: outputs/pdf102/
+          retention-days: 14
