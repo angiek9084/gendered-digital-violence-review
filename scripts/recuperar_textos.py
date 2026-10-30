@@ -40,3 +40,5 @@ for i,r in enumerate(records):
 with (ROOT/"enlaces_texto_completo.csv").open("w",encoding="utf-8",newline="") as f:
  w=csv.DictWriter(f,fieldnames=["id","title","doi","status","openalex_url","oa_url","pdf_url","license","error"]);w.writeheader();w.writerows(results)
 print("SUMMARY",len(results),{s:sum(x["status"]==s for x in results) for s in set(x["status"] for x in results)})
+
+# Trigger GitHub Actions discovery run.
