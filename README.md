@@ -1,16 +1,25 @@
-# Gendered Digital Violence Review
+# Gendered Digital Violence Review — Reproducibility package
 
-Private research repository for bibliographic enrichment and eligibility screening (2016–2026).
+This package supports the review of 350 bibliographic records (2016–2026) concerning gendered digital violence, with attention to research on women politicians, journalists and academics.
 
-## Current batch
-160 publications require external metadata checks. The 249 thematically accepted records and 38 records reserved for human screening are not part of this batch.
+## What is included
 
-## Run
-1. Upload `data/cola_160_openalex_crossref.csv` (160 records; columns `record_id,title,doi,year,document_type`).
-2. Under **Settings → Secrets and variables → Actions**, create the repository secret `OPENALEX_API_KEY`. Optional: `CONTACT_EMAIL`.
-3. Open **Actions → Enriquecer 160 publicaciones → Run workflow**.
-4. Download the private artifact `enriquecimiento-api-160` from the run.
+- `data/bibliographic_corpus_350.csv`: the fixed 350-record analytical bibliography (IDs, publication metadata, source databases). This file has **no article full texts or abstracts**.
+- `data/figure_data_*.csv`: tabular summaries used to prepare Figures 1–6.
+- `data/figure_data_first_authorship_gender.csv`: aggregated first-authorship counts for the gender figure (274 women, 67 men).
+- `data/first_authorship_verification_summary.csv`: aggregate description of the authorship review (290 automated-assisted profile checks; 51 manual checks; 9 institutional authorships).
+- `figures/`: publication-oriented graphics in English (six bibliometric figures and the first-authorship figure).
+- `documentation/DATA_DICTIONARY.md`: column definitions and denominator notes.
+- `documentation/METHODS_AND_LIMITATIONS.md`: provenance, reproducibility limits and documentation still needed.
 
-Results include Crossref/OpenAlex title matches, similarity scores, abstracts, links and error fields. **Metadata matches do not establish eligibility**. Verify the studied population and substantive focus before deciding.
+## Important limitations
 
-Never commit API keys, passwords, or unlicensed full texts.
+This is a **curated release package**, not the full record of every stage of systematic screening. The 350-record corpus is the agreed final bibliography, but the historical eligibility log is not included. The bibliometric figure-data tables were reproduced from previously generated analysis summaries; descriptive visualizations should be checked once more against the final manuscript. No publication-level labels for gender or automatically inferred violence forms are released here. The gender figures report the research team's consolidated first-author classification and should not be interpreted as independent verification of gender identity.
+
+Exploratory, unvalidated rule-based violence-type and methodological-detection graphics are **excluded** from this package. They must not be presented as fully human-validated content analysis.
+
+The corpus's bibliographic metadata originate from Scopus and Web of Science exports and should be used with attribution and respect for any applicable database terms. Underlying articles and reports remain with their rights holders; access via DOI where available.
+
+## Persistent identifier and accessibility
+
+This folder does **not** currently have a DOI. A public GitHub repository URL is not a persistent identifier. Once reviewed and released, a versioned archive can be deposited in Zenodo to generate a DOI. Please verify public accessibility before claiming that data are openly available.
